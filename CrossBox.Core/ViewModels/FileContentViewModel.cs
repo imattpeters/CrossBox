@@ -1,9 +1,9 @@
-﻿using Cirrious.MvvmCross.Interfaces.ServiceProvider;
+﻿//using Cirrious.MvvmCross.Interfaces.ServiceProvider;
 using CrossBox.Core.DropBox;
-using Cirrious.MvvmCross.ExtensionMethods;
+//using Cirrious.MvvmCross.ExtensionMethods;
 
 namespace CrossBox.Core.ViewModels {
-	public class FileContentViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient> {
+	public class FileContentViewModel : CrossBoxViewModel /*, IMvxServiceConsumer<IDropBoxClient>*/ {
 		public FileContentViewModel( string fileName ) {
 			FileName = fileName;
 			IsLoading = true;
@@ -37,7 +37,7 @@ namespace CrossBox.Core.ViewModels {
 		}
 
 		private IDropBoxClient Client {
-			get { return this.GetService<IDropBoxClient>(); }
+			get { return Mvx.Resolve<IDropBoxClient>(); }
 		}
 	}
 }

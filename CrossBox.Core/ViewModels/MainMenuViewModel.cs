@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Cirrious.MvvmCross.Commands;
-using Cirrious.MvvmCross.ExtensionMethods;
-using Cirrious.MvvmCross.Interfaces.Commands;
-using Cirrious.MvvmCross.Interfaces.ServiceProvider;
+//using Cirrious.MvvmCross.Commands;
+//using Cirrious.MvvmCross.ExtensionMethods;
+//using Cirrious.MvvmCross.Interfaces.Commands;
+//using Cirrious.MvvmCross.Interfaces.ServiceProvider;
 using CrossBox.Core.DropBox;
 using CrossBox.Core.Services;
+using Cirrious.MvvmCross.ViewModels;
 
 namespace CrossBox.Core.ViewModels {
-	public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>, IMvxServiceConsumer<IFileSelector> {
+	public class MainMenuViewModel : CrossBoxViewModel/*, IMvxServiceConsumer<IDropBoxClient>, IMvxServiceConsumer<IFileSelector>*/ {
 		public MainMenuViewModel( string folder = "/" ) {
 			_folderContents = new ObservableCollection<DropBoxObjectViewModel>();
 			SelectFolder( folder ?? "/" );
@@ -45,7 +46,7 @@ namespace CrossBox.Core.ViewModels {
 		public ObservableCollection<DropBoxObjectViewModel> FolderContents { get { return _folderContents; } }
 
 		private IDropBoxClient Client {
-			get { return this.GetService<IDropBoxClient>(); }
+			get { return Mvx.Resolve<IDropBoxClient>(); }
 		}
 
 		public IMvxCommand SelectItemCommand {
@@ -78,8 +79,8 @@ namespace CrossBox.Core.ViewModels {
 			}
 		}
 
-		public MvxRelayCommand UploadFileCommand {
-			get { return new MvxRelayCommand( UploadFile ); }
+		public MvxCommand UploadFileCommand {
+			get { return new MvxCommand( UploadFile ); }
 		}
 
 		private void UploadFile() {
